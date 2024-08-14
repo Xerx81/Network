@@ -1,0 +1,134 @@
+body {
+    margin: 0 20rem;
+    background-color: #F8F9FA;
+}
+
+#posts-page {
+    margin: 1rem;
+}
+
+.post {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+    overflow: hidden;
+}
+
+.form-control {
+    margin-bottom: 3px;
+}
+
+#time {
+    color: gray;
+    font-size: 12px;
+}
+
+.index-username {
+    color: black;
+}
+
+.index-username:hover {
+    text-decoration: none;
+    color: black;
+}
+
+#profile-page {
+    margin: 1rem;
+}
+
+#profile hr {
+    border: none;
+    background-color: lightgray;
+    height: 1.5px;
+}
+
+.follow-count {
+    margin-right: 20px ;
+}
+
+.follow-count:hover {
+    cursor: pointer;
+}
+
+.follow-color {
+    color: gray;
+}
+
+#follow-cont {
+    display: inline-block;
+}
+
+#unfollow {
+    border-radius: 20px;
+}
+
+#unfollow:hover {
+    color: red;
+    background-color: white;
+    border-color: red; 
+}
+
+#follow {
+    border-radius: 20px;
+    outline: none;
+}
+
+#follow:hover {
+    color: #007BFF;
+    background-color: white;
+    border-color: #007BFF;
+    
+}
+
+#follow:focus, #unfollow:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.edit-btn {
+    float: right;
+    background-color: #F8F9FA;
+    border: none;
+    outline: none;
+}
+
+.edit-btn:focus {
+    outline: none;
+    color: #007BFF;
+}
+
+.edit-btn:hover {
+    text-decoration: none;   
+    color: #007BFF;
+}
+
+.hidden {
+    display: none;
+}
+
+.like-btn, .comment-btn {
+    border: none;
+    background-color: #F8F9FA;
+    color: #bdbdbd;
+    font-size: 12px;
+    text-decoration: none;
+    transition: transform 0.1s ease-in;
+}
+
+.red-like-btn {
+    color: red;
+}
+
+.clicked {
+    transform: scale(1.3);
+}
+
+.like-btn:focus, .comment-btn:focus {
+    outline: none;
+}
+
+.comment-btn:hover {
+    cursor: pointer;
+    color: #1D9BF0;
+}

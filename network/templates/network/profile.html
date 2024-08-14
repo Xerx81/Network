@@ -1,0 +1,94 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <div id="profile-page">
+        {% if error %}
+            <h3>{{ error }}</h3>
+        {% else %}
+            <div id="profile">
+                <h2>
+                    <span>{{ username }}</span>
+                    {% if request.user.id != user_id and user.is_authenticated %}
+                        <div id="follow-cont">
+                            <form action="{% url 'profile' user_id=user_id %}" method="post">
+                                {% csrf_token %}
+
+                                {% if isfollowing %}
+                                    <input type="submit" id="unfollow" class="btn btn-sm btn-outline-secondary" name="un/follow" value="Following">
+                                {% else %}
+                                    <input type="submit" id="follow" class="btn btn-sm btn-outline-secondary" name="un/follow" value="Follow">
+                                {% endif %}
+                            </form>
+                        </div>
+                    {% endif %}
+                </h2>
+                <span class="follow-count"><span>{{ following.count }}</span> <span class="follow-color">following</span></span>
+                <span class="follow-count"><span>{{ followers.count }}</span> <span class="follow-color">followers</span></span>
+                <hr>
+            </div>
+            {% for post in page_obj %}
+                <div class="post">
+                    {% if post.user.id == request.user.id %}
+                        <button class="edit-btn" id="edit-btn{{ post.id }}" onclick="edit(`{{ post.id }}`)">edit</button>
+                    {% endif %}
+
+                    <h6>{{ post.user }} <span id="time">{{ post.time }}</span></h6>
+                    <span id="content{{ post.id }}">{{ post.content }}</span><br>
+
+                    {% if post.user.id == request.user.id %}
+                        <div id="editarea{{ post.id }}" class="hidden">
+                            <textarea name="edited" class="form-control" id="textarea{{ post.id }}">{{ post.content }}</textarea>
+                            <button class="btn btn-sm btn-primary" onclick="save(`{{ post.id }}`)">Save</button>
+                        </div>
+                    {% endif %}
+
+                    {% if user.is_authenticated %}
+                        {% if post in likedPosts %}
+                            <button class="like-btn red-like-btn" id="like{{ post.id }}" onclick="like(`{{ post.id }}`)">
+                                <i class="fa fa-heart"></i> 
+                                <span id="like-count{{ post.id }}">
+                                    {% for p in posts_with_like_count %}
+                                        {% if p.id == post.id %}
+                                            {{ p.like_count }}
+                                        {% endif %}
+                                    {% endfor %}
+                                </span>
+                            </button>
+                        {% else %}
+                            <button class="like-btn" id="like{{ post.id }}" onclick="like(`{{ post.id }}`, 'notLiked')">
+                                <i class="fa fa-heart"></i> 
+                                <span id="like-count{{ post.id }}">
+                                    {% for p in posts_with_like_count %}
+                                        {% if p.id == post.id %}
+                                            {{ p.like_count }}
+                                        {% endif %}
+                                    {% endfor %}
+                                </span>
+                            </button>
+                        {% endif %}
+                        <button class="comment-btn"><i class="fa fa-comment"></i></button>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+    </div>
+{% endblock %}
